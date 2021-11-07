@@ -2,35 +2,38 @@ version: '3.9'
 
 services:
   portainer:
-    image: portainer/portainer-ce:latest
-    command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password-file /volume1/docker/portainer/secrets/pass
+    image: portainer/portainer-ce:2.9.2
+    command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password-file /run/secrets/pass
     ports:
       - "9443:9443"
       - "9000:9000"
       - "8000:8000"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
       - /volume1/docker/portainer/data:/data
+      - /volume1/docker/portainer/secrets:/run/secrets
     networks:
-      - bridge
+      - agent_network
     deploy:
       mode: replicated
       replicas: 1
       placement:
-        constraints: [node.role == manager]
+        constraints: 
+          - node.role == manager
 
   agent:
     image: portainer/agent:2.9.2
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /var/lib/docker/volumes:/var/lib/docker/volumes
     networks:
       - agent_network
     deploy:
       mode: global
       placement:
-        constraints: [node.platform.os == linux]
+        constraints:
+          - node.role == manager
+          - node.platform.os == linux
 
 networks:
-  bridge:
-    external: true
+  agent_network:
+    driver: overlay
+    attachable: true
