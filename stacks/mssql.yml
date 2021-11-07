@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  server:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    networks:
+      - bridge
+    ports:
+      - "1433:1433"
+    volumes:
+      - /volume1/docker/mssql/data:/var/opt/mssql/data
+      - /volume1/docker/mssql/log:/var/opt/mssql/log
+      - /volume1/docker/mssql/secrets:/var/opt/mssql/secrets
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Cyp#er1X_$QL
+    deploy:
+      mode: replicated
+      replicas: 1
+
+networks:
+  bridge:
+    external: true
