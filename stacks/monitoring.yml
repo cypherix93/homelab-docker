@@ -2,7 +2,6 @@ version: '3.9'
 
 services:
   portainer:
-    container_name: portainer
     image: portainer/portainer-ce:latest
     command: --admin-password-file /volume1/docker/portainer/secrets/pass
     ports:
@@ -16,3 +15,6 @@ services:
     deploy:
       restart_policy:
         condition: on-failure
+networks:
+  bridge:
+    external: true
