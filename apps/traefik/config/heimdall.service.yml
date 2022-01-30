@@ -1,0 +1,10 @@
+http:
+  routers:
+    heimdall:
+      rule: "Host(`dashboard.cypherix.dev`)"
+      service: "heimdall"
+  services:
+    heimdall:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.251:4313"

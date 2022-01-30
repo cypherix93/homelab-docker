@@ -1,0 +1,10 @@
+http:
+  routers:
+    sonarr:
+      rule: "Host(`sonarr.cypherix.dev`)"
+      service: "sonarr"
+  services:
+    sonarr:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.244:8989"

@@ -1,0 +1,10 @@
+http:
+  routers:
+    overseerr:
+      rule: "Host(`overseerr.cypherix.io`)"
+      service: "overseerr"
+  services:
+    overseerr:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.251:5055"

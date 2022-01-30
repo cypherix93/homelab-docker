@@ -1,0 +1,21 @@
+tls:
+  certificates:
+    - certFile: /certs/origin/cypherix.dev.pem
+      keyFile: /certs/origin/cypherix.dev.key
+    - certFile: /certs/origin/cypherix.io.pem
+      keyFile: /certs/origin/cypherix.io.key
+
+http:
+  middlewares:
+    secHeaders:
+      headers:
+        browserXssFilter: true
+        contentTypeNosniff: true
+        frameDeny: true
+        sslRedirect: true
+        
+        #HSTS Configuration
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 31536000
+        customFrameOptionsValue: "SAMEORIGIN"

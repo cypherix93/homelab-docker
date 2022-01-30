@@ -1,0 +1,10 @@
+http:
+  routers:
+    radarr:
+      rule: "Host(`radarr.cypherix.dev`)"
+      service: "radarr"
+  services:
+    radarr:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.244:7878"
