@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   portainer:
-    image: portainer/portainer-ce:2.9.2
+    image: portainer/portainer-ce:2.11.0
     command: -H tcp://tasks.agent:9001 --tlsskipverify --admin-password-file /run/secrets/pass
     ports:
       - "9443:9443"
@@ -21,7 +21,7 @@ services:
           - node.role == manager
 
   agent:
-    image: portainer/agent:2.9.2
+    image: portainer/agent:2.11.0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
