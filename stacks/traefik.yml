@@ -1,0 +1,17 @@
+version: '3.9'
+
+services:
+  traefik:
+    image: traefik:latest
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "4080:80"
+      - "40443:443"      
+      - "40880:8080" # The Web UI (enabled by --api.insecure=true)
+    volumes:
+      # docker socket
+      - /var/run/docker.sock:/var/run/docker.sock
+      # mapped volumes
+      - /volume1/docker/traefik/certs:/certs
+      - /volume1/docker/traefik/etc:/etc
+      - /volume1/docker/traefik/run:/run
