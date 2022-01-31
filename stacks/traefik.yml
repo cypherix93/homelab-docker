@@ -3,7 +3,7 @@ version: '3'
 services:
   traefik:
     image: traefik:v2.6
-    command: --api.insecure=true --providers.docker
+    command: --api.insecure=true
     ports:
       - "4080:80"
       - "40443:443"
