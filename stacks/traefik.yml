@@ -9,9 +9,6 @@ services:
       # web UI
       - '40880:8080'
     volumes:
-      # docker socket
-      - /var/run/docker.sock:/var/run/docker.sock
-      # mapped volumes
       - /volume1/docker/traefik/etc:/etc
       - /volume1/docker/traefik/run:/run:ro
       - /volume1/docker/traefik/certs:/certs:ro
