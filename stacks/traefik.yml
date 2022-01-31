@@ -6,7 +6,8 @@ services:
     ports:
       - '4080:80'
       - '40443:443'
-      - '40880:8080' # The Web UI (enabled by --api.insecure=true)
+      # web UI
+      - '40880:8080'
     volumes:
       # docker socket
       - /var/run/docker.sock:/var/run/docker.sock
