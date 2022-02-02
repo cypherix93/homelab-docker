@@ -6,7 +6,8 @@ services:
 #============================================================
   sonarr:
     image: lscr.io/linuxserver/sonarr
-    network_mode: service:wireguard
+    networks:
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -18,7 +19,8 @@ services:
 #-------------------------------------------------------------
   radarr:
     image: lscr.io/linuxserver/radarr
-    network_mode: service:wireguard
+    networks:
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -30,7 +32,8 @@ services:
 #-------------------------------------------------------------
   bazarr:
     image: lscr.io/linuxserver/bazarr
-    network_mode: service:wireguard
+    networks:
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -46,7 +49,8 @@ services:
 #============================================================
   jackett:
     image: lscr.io/linuxserver/jackett
-    network_mode: service:wireguard
+    networks:
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -59,7 +63,8 @@ services:
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr
-    network_mode: service:wireguard
+    networks:
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -75,6 +80,8 @@ services:
 #============================================================
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
+    networks:
+      - wg_network
     environment:
       - LOG_LEVEL=info
       - LOG_HTML=false
@@ -90,7 +97,7 @@ services:
   wireguard:
     image: linuxserver/wireguard
     networks:
-      - wg_vpn
+      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -108,5 +115,6 @@ services:
 # Networks
 #============================================================
 networks:
-  wg_vpn:
-    driver: bridge
+  wg_network:
+    driver: overlay
+    attachable: true
