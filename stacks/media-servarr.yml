@@ -6,27 +6,39 @@ services:
 #============================================================
   sonarr:
     image: lscr.io/linuxserver/sonarr
+    network_mode: service:wireguard
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${DOCKER_DIR}/sonarr/config:/config
-      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 8989:8989
 #-------------------------------------------------------------
   radarr:
     image: lscr.io/linuxserver/radarr
+    network_mode: service:wireguard
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${DOCKER_DIR}/radarr/config:/config
-      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 7878:7878
+#-------------------------------------------------------------
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    network_mode: service:wireguard
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/bazarr/config:/config
+    ports:
+      - 6767:6767
 #-------------------------------------------------------------
 
 
@@ -34,6 +46,7 @@ services:
 #============================================================
   jackett:
     image: lscr.io/linuxserver/jackett
+    network_mode: service:wireguard
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -47,6 +60,7 @@ services:
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr
+    network_mode: service:wireguard
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -63,8 +77,8 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     environment:
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      - LOG_HTML=${LOG_HTML:-false}
+      - LOG_LEVEL=info
+      - LOG_HTML=false
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TZ}
     ports:
