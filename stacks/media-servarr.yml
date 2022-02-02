@@ -54,7 +54,6 @@ services:
       - AUTO_UPDATE=true
     volumes:
       - ${DOCKER_DIR}/jackett/config:/config
-      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - 9117:9117
 #-------------------------------------------------------------
