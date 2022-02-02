@@ -6,6 +6,8 @@ services:
 #============================================================
   sonarr:
     image: lscr.io/linuxserver/sonarr
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -19,6 +21,8 @@ services:
 #-------------------------------------------------------------
   radarr:
     image: lscr.io/linuxserver/radarr
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -32,6 +36,8 @@ services:
 #-------------------------------------------------------------
   bazarr:
     image: lscr.io/linuxserver/bazarr
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -49,6 +55,8 @@ services:
 #============================================================
   jackett:
     image: lscr.io/linuxserver/jackett
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -63,6 +71,8 @@ services:
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -80,6 +90,8 @@ services:
 #============================================================
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
+    depends_on:
+      - wireguard
     networks:
       - wg_network
     environment:
@@ -101,14 +113,19 @@ services:
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
     sysctls:
       - net.ipv4.conf.all.src_valid_mark=1
     volumes:
       - ${DOCKER_DIR}/wireguard/config:/config
       - /lib/modules:/lib/modules:ro
+    # this is dropped by portianer but keep it for future
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    deploy:
+      mode: global
+      labels:
+        io.portainerhack.cap_add: NET_ADMIN,SYS_MODULE
 #-------------------------------------------------------------
 
 
