@@ -1,0 +1,28 @@
+version: '3.5'
+
+services:
+#-------------------------------------------------------------
+  tautulli:
+    image: tautulli/tautulli:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/tautulli/config:/config
+    ports:
+      - 8181:8181
+#-------------------------------------------------------------
+  overseerr:
+    image: sctx/overseerr:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/overseerr/app/config:/app/config
+    ports:
+      - 5055:5055
+    deploy:
+      mode: replicated
+      replicas: 2
