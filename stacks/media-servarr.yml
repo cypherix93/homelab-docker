@@ -57,6 +57,7 @@ services:
     image: lscr.io/linuxserver/jackett
     depends_on:
       - wireguard
+      - flaresolverr
     networks:
       - wg_network
     environment:
@@ -73,6 +74,7 @@ services:
     image: lscr.io/linuxserver/prowlarr
     depends_on:
       - wireguard
+      - flaresolverr
     networks:
       - wg_network
     environment:
