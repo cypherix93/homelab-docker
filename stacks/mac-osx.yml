@@ -1,0 +1,11 @@
+version: '3.5'
+
+services:
+  mac-osx:
+    image: sickcodes/docker-osx:latest
+    environment:
+      - DISPLAY=0.0
+    ports:
+      - 50922:10022
+    volumes:
+      - /volume1/docker/mac-osx/tmp/.X11-unix:/tmp/.X11-unix
