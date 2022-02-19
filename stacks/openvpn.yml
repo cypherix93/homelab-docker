@@ -16,7 +16,7 @@ services:
     volumes:
       # for openvpn to access TUN device
       - /dev/net:/dev/net:z
-      - ${DOCKER_DIR}/openvpn/config:/config
+      - ${DOCKER_DIR}/openvpn/vpn:/vpn
     # this is dropped by portianer but keep it for future
     cap_add:
       - NET_ADMIN
