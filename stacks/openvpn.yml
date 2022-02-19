@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+
+  openvpn:
+    image: dperson/openvpn-client
+    networks:
+      - vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VPNPORT=${OPENVPN_PORT}
+      - VPN_FILES=${OPENVPN_FILES}
+      - FIREWALL=''
+    volumes:
+      # for openvpn to access TUN device
+      - /dev/net:/dev/net:z
+      - ${DOCKER_DIR}/openvpn/config:/config
+    # this is dropped by portianer but keep it for future
+    cap_add:
+      - NET_ADMIN
+    deploy:
+      mode: global
+      labels:
+        io.portainerhack.cap_add: NET_ADMIN
+
+networks:
+  vpn:
+    external: true
+    name: ${VPN_NETWORK_NAME}
