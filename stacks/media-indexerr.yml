@@ -21,7 +21,7 @@ services:
       - 9117:9117
 #-------------------------------------------------------------
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr
+    image: lscr.io/linuxserver/prowlarr:develop
     depends_on:
       - flaresolverr
     networks:
