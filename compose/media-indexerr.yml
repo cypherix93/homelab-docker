@@ -6,10 +6,11 @@ services:
 #-------------------------------------------------------------
   jackett:
     image: lscr.io/linuxserver/jackett
+    container_name: jackett
+    network_mode: service:openvpn
     depends_on:
+      - openvpn
       - flaresolverr
-    networks:
-      - vpn
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -18,14 +19,15 @@ services:
     volumes:
       - ${DOCKER_DIR}/jackett/config:/config
     ports:
-      - 9117:9117
+      - '9117:9117'
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    network_mode: service:openvpn
     depends_on:
+      - openvpn
       - flaresolverr
-    networks:
-      - vpn
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -33,27 +35,40 @@ services:
     volumes:
       - ${DOCKER_DIR}/prowlarr/config:/config
     ports:
-      - 9696:9696
+      - '9696:9696'
 
 
 # Utilities
 #-------------------------------------------------------------
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
-    networks:
-      - vpn
+    container_name: flaresolverr
+    network_mode: service:openvpn
+    depends_on:
+      - openvpn
     environment:
       - LOG_LEVEL=info
       - LOG_HTML=false
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TZ}
     ports:
-      - 8191:8191
+      - '8191:8191'
 
 
-# Networks
+# VPN
 #-------------------------------------------------------------
-networks:
-  vpn:
-    external: true
-    name: ${VPN_NETWORK_NAME}
+  openvpn:
+    image: dperson/openvpn-client
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - VPNPORT=${OPENVPN_PORT}
+      - VPN_FILES=${OPENVPN_FILES}
+      - FIREWALL=''
+    volumes:
+      # for openvpn to access TUN device
+      - /dev/net:/dev/net:z
+      - ${DOCKER_DIR}/openvpn/vpn:/vpn
