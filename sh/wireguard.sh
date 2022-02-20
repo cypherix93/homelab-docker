@@ -1,10 +1,8 @@
 #!/bin/bash
-
 # From: https://github.com/BrodyBuster/docker-wireguard-vpn
-
 # Name of the docker network to route through wireguard
 # This network will be created if it does not exist
-DOCKER_NET_NAME="wireguard-vpn-wg0"
+DOCKER_NET_NAME="wireguard-wg0"
 # Subnet to use for this docker network
 DOCKER_NET_SUBNET="10.30.0.0/16"
 # Name of wireguard interface to create
@@ -108,7 +106,7 @@ up () {
     if_check "$CMD" "$CHECK"
 
     # create docker network
-    CMD="docker network create $DOCKER_NET_NAME -d bridge --scope swarm --attachable --subnet $DOCKER_NET_SUBNET -o "com.docker.network.driver.mtu"="$INTERFACE_MTU""
+    CMD="docker network create $DOCKER_NET_NAME -d bridge --attachable --subnet $DOCKER_NET_SUBNET -o "com.docker.network.driver.mtu"="$INTERFACE_MTU""
     CHECK=$(docker network inspect $DOCKER_NET_NAME > /dev/null 2>&1)
     while_check "$CMD" "$CHECK"
 
