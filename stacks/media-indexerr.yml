@@ -18,7 +18,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/jackett/config:/config
     ports:
-      - 9117:9117
+      - ${NETWORK_WIREGUARD_SUBNET_IP}:9117:9117
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
@@ -33,7 +33,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/prowlarr/config:/config
     ports:
-      - 9696:9696
+      - ${NETWORK_WIREGUARD_SUBNET_IP}:9696:9696
 
 
 # Utilities
@@ -48,7 +48,7 @@ services:
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TZ}
     ports:
-      - 8191:8191
+      - ${NETWORK_WIREGUARD_SUBNET_IP}:8191:8191
 
 
 # Networks
