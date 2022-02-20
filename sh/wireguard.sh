@@ -3,8 +3,10 @@
 # From: https://github.com/BrodyBuster/docker-wireguard-vpn
 
 # Name of the docker network to route through wireguard
-# This network will be created if it does not exist using 10.30.0.0/16
+# This network will be created if it does not exist
 DOCKER_NET_NAME="wireguard-vpn-wg0"
+# Subnet to use for this docker network
+DOCKER_NET_SUBNET="10.30.0.0/16"
 # Name of wireguard interface to create
 DEV_NAME="wg0"
 # Path to wireguard conf file
@@ -13,8 +15,7 @@ WG_CONF_PATH="/volume1/docker/wireguard/config/$DEV_NAME.conf"
 DEDICATED_IP=""
 
 ##########################################################################################
-# Get IP addresses and subnets needed
-DOCKER_NET=$(docker network inspect $DOCKER_NET_NAME | grep Subnet | awk '{print $2}' | sed 's/[",]//g')
+# Get configs from wireguard configs
 INTERFACE_IP=$(grep Address $WG_CONF_PATH | awk '{print $3}' | cut -d/ -f1)
 INTERFACE_DNS=$(grep DNS $WG_CONF_PATH | awk '{print $3}' | cut -d/ -f1)
 INTERFACE_MTU=$(grep MTU $WG_CONF_PATH | awk '{print $3}' | cut -d/ -f1)
@@ -107,12 +108,12 @@ up () {
     if_check "$CMD" "$CHECK"
 
     # create docker network
-    CMD="docker network create $DOCKER_NET_NAME --subnet 10.30.0.0/16 -o "com.docker.network.driver.mtu"="$INTERFACE_MTU""
+    CMD="docker network create $DOCKER_NET_NAME -d bridge --scope swarm --attachable --subnet $DOCKER_NET_SUBNET -o "com.docker.network.driver.mtu"="$INTERFACE_MTU""
     CHECK=$(docker network inspect $DOCKER_NET_NAME > /dev/null 2>&1)
     while_check "$CMD" "$CHECK"
 
     # add table 200
-    CMD="ip rule add from $DOCKER_NET table 200"
+    CMD="ip rule add from $DOCKER_NET_SUBNET table 200"
     CHECK=$(ip rule show | grep -w "lookup 200")
     while_check "$CMD" "$CHECK"
 
@@ -146,7 +147,7 @@ down () {
     if_check "$CMD" "$CHECK"
 
     # add table 200
-    CMD="ip rule add from $DOCKER_NET table 200"
+    CMD="ip rule add from $DOCKER_NET_SUBNET table 200"
     CHECK=$(ip rule show | grep -w "lookup 200")
     while_check "$CMD" "$CHECK"
 
