@@ -18,7 +18,15 @@ services:
     volumes:
       - ${DOCKER_DIR}/jackett/config:/config
     ports:
-      - ${NETWORK_WIREGUARD_SUBNET_IP}:9117:9117
+      - target: 9117
+        published: 9117
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
 #-------------------------------------------------------------
   prowlarr:
     image: lscr.io/linuxserver/prowlarr:develop
@@ -33,7 +41,15 @@ services:
     volumes:
       - ${DOCKER_DIR}/prowlarr/config:/config
     ports:
-      - ${NETWORK_WIREGUARD_SUBNET_IP}:9696:9696
+      - target: 9696
+        published: 9696
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
 
 
 # Utilities
@@ -48,7 +64,15 @@ services:
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=${TZ}
     ports:
-      - ${NETWORK_WIREGUARD_SUBNET_IP}:8191:8191
+      - target: 8191
+        published: 8191
+        protocol: tcp
+        mode: host
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
 
 
 # Networks
