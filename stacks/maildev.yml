@@ -12,8 +12,7 @@ services:
     ports:
       - '1080:1080'
       - '1025:1025'
-    entrypoint: [
-      "bin/maildev", 
+    command: [
       "--web", "1080",
       "--smtp", "1025",
       "--outgoing-host", "${MAILDEV_OUTGOING_HOST}",
