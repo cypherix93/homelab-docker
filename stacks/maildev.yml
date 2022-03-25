@@ -16,6 +16,6 @@ services:
       - MAILDEV_OUTGOING_SECURE=${MAILDEV_OUTGOING_SECURE}
       - MAILDEV_AUTO_RELAY=${MAILDEV_AUTO_RELAY}
     ports:
-      - 1080:1080
-      - 1025:1025
+      - '1080:80'
+      - '1025:25'
 
