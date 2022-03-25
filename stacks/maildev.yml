@@ -9,13 +9,17 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
-      - MAILDEV_OUTGOING_HOST=${MAILDEV_OUTGOING_HOST}
-      - MAILDEV_OUTGOING_PORT=${MAILDEV_OUTGOING_PORT}
-      - MAILDEV_OUTGOING_USER=${MAILDEV_OUTGOING_USER}
-      - MAILDEV_OUTGOING_PASS=${MAILDEV_OUTGOING_PASS}
-      - MAILDEV_OUTGOING_SECURE=${MAILDEV_OUTGOING_SECURE}
-      - MAILDEV_AUTO_RELAY=${MAILDEV_AUTO_RELAY}
     ports:
-      - '1080:80'
-      - '1025:25'
-
+      - '1080:1080'
+      - '1025:1025'
+    entrypoint: [
+      "bin/maildev", 
+      "--web", "1080",
+      "--smtp", "1025",
+      "--outgoing-host", "${MAILDEV_OUTGOING_HOST}",
+      "--outgoing-port", "${MAILDEV_OUTGOING_PORT}",
+      "--outgoing-user", "${MAILDEV_OUTGOING_USER}",
+      "--outgoing-pass", "${MAILDEV_OUTGOING_PASS}",
+      "--outgoing-secure",
+      "--auto-relay"
+    ]
