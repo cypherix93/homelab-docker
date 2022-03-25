@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  # MailDev
+  maildev:
+    image: maildev/maildev
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - MAILDEV_OUTGOING_HOST=${MAILDEV_OUTGOING_HOST}
+      - MAILDEV_OUTGOING_PORT=${MAILDEV_OUTGOING_PORT}
+      - MAILDEV_OUTGOING_USER=${MAILDEV_OUTGOING_USER}
+      - MAILDEV_OUTGOING_PASS=${MAILDEV_OUTGOING_PASS}
+      - MAILDEV_OUTGOING_SECURE=${MAILDEV_OUTGOING_SECURE}
+      - MAILDEV_AUTO_RELAY=${MAILDEV_AUTO_RELAY}
+    ports:
+      - 1080:1080
+      - 1025:1025
+
