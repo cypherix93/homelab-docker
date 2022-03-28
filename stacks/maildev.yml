@@ -4,7 +4,7 @@ services:
 
   # MailDev
   maildev:
-    image: maildev/maildev
+    image: soulteary/maildev
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
