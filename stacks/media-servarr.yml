@@ -6,134 +6,43 @@ services:
 #============================================================
   sonarr:
     image: lscr.io/linuxserver/sonarr
-    depends_on:
-      - wireguard
-    networks:
-      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${DOCKER_DIR}/sonarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 8989:8989
 #-------------------------------------------------------------
   radarr:
     image: lscr.io/linuxserver/radarr
-    depends_on:
-      - wireguard
-    networks:
-      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${DOCKER_DIR}/radarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 7878:7878
 #-------------------------------------------------------------
   bazarr:
     image: lscr.io/linuxserver/bazarr
-    depends_on:
-      - wireguard
-    networks:
-      - wg_network
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
     volumes:
       - ${DOCKER_DIR}/bazarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 6767:6767
 #-------------------------------------------------------------
-
-
-# Indexers
-#============================================================
-  jackett:
-    image: lscr.io/linuxserver/jackett
-    depends_on:
-      - wireguard
-      - flaresolverr
-    networks:
-      - wg_network
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-      - AUTO_UPDATE=true
-    volumes:
-      - ${DOCKER_DIR}/jackett/config:/config
-    ports:
-      - 9117:9117
-#-------------------------------------------------------------
-  prowlarr:
-    image: lscr.io/linuxserver/prowlarr
-    depends_on:
-      - wireguard
-      - flaresolverr
-    networks:
-      - wg_network
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
-    volumes:
-      - ${DOCKER_DIR}/prowlarr/config:/config
-    ports:
-      - 9696:9696
-#-------------------------------------------------------------
-
-
-# Utilities
-#============================================================
-  flaresolverr:
-    image: ghcr.io/flaresolverr/flaresolverr:latest
-    depends_on:
-      - wireguard
-    networks:
-      - wg_network
-    environment:
-      - LOG_LEVEL=info
-      - LOG_HTML=false
-      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=${TZ}
-    ports:
-      - 8191:8191
-#-------------------------------------------------------------
-
-
-# WireGuard
-#============================================================
-  wireguard:
-    image: linuxserver/wireguard
-    networks:
-      - wg_network
-    environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-    sysctls:
-      - net.ipv4.conf.all.src_valid_mark=1
-    volumes:
-      - ${DOCKER_DIR}/wireguard/config:/config
-      - /lib/modules:/lib/modules:ro
-    # this is dropped by portianer but keep it for future
-    cap_add:
-      - NET_ADMIN
-      - SYS_MODULE
-    deploy:
-      mode: global
-      labels:
-        io.portainerhack.cap_add: NET_ADMIN,SYS_MODULE
-#-------------------------------------------------------------
-
-
-# Networks
-#============================================================
-networks:
-  wg_network:
-    driver: overlay
-    attachable: true
