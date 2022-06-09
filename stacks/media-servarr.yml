@@ -46,3 +46,13 @@ services:
     ports:
       - 6767:6767
 #-------------------------------------------------------------
+  unpackerr:
+    image: golift/unpackerr:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/unpackerr:/etc/unpackerr
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+#-------------------------------------------------------------
