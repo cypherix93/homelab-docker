@@ -39,6 +39,8 @@ services:
     image: ghcr.io/petio-team/petio:latest
     depends_on:
       - "petio-mongodb"
+    networks:
+      - "petio-network"
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -51,6 +53,17 @@ services:
 
   petio-mongodb:
     image: mongo:4.4
+    networks:
+      - "petio-network"
     volumes:
-      - ${DOCKER_DIR}/petio/data/db:/data/db
+      - ${DOCKER_DIR}/petio/data/db:/data/db    
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+          - node.platform.os == linux
 #-------------------------------------------------------------
+networks:
+  petio-network:
+    driver: overlay
