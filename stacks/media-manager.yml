@@ -35,3 +35,22 @@ services:
     ports:
       - "3579:3579"
 #-------------------------------------------------------------
+  petio:
+    image: ghcr.io/petio-team/petio:latest
+    depends_on:
+      - "petio-mongodb"
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/petio/app/api/config:/app/api/config
+      - ${DOCKER_DIR}/petio/app/logs:/app/logs
+    ports:
+      - "7777:7777"
+
+  petio-mongodb:
+    image: mongo:4.4
+    volumes:
+      - ${DOCKER_DIR}/petio/data/db:/data/db
+#-------------------------------------------------------------
