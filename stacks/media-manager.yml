@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.5"
 
 services:
 #-------------------------------------------------------------
@@ -11,7 +11,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/tautulli/config:/config
     ports:
-      - 8181:8181
+      - "8181:8181"
 #-------------------------------------------------------------
   overseerr:
     image: sctx/overseerr:latest
@@ -22,7 +22,16 @@ services:
     volumes:
       - ${DOCKER_DIR}/overseerr/app/config:/app/config
     ports:
-      - 5055:5055
-    deploy:
-      mode: replicated
-      replicas: 2
+      - "5055:5055"
+#-------------------------------------------------------------
+  ombi:
+    image: lscr.io/linuxserver/ombi:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/ombi/config:/config
+    ports:
+      - "3579:3579"
+#-------------------------------------------------------------
