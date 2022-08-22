@@ -1,0 +1,18 @@
+version: '3.5'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: asdfghjkl
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: cypherix93@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: asdfghjkl
+    volumes:
+      - ${DOCKER_DIR}/pgadmin4/var/lib/pgadmin:/var/lib/pgadmin
+    ports:
+      - "3380:80"
+      - "33443:443"
