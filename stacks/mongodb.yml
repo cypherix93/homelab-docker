@@ -1,0 +1,15 @@
+version: "3.5"
+
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - ${DOCKER_DIR}/mongodb/data:/data
+    ports:
+      - "27018:27017"
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+          - node.platform.os == linux
