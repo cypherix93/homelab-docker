@@ -6,7 +6,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/mongodb/data:/data
     ports:
-      - "27018:27017"
+      - "27017:27017"
     deploy:
       mode: global
       placement:
