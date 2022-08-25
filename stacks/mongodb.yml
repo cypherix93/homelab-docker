@@ -4,7 +4,8 @@ services:
   db:
     image: mongo:4.4.6
     volumes:
-      - ${DOCKER_DIR}/mongodb/data:/data
+      - ${DOCKER_DIR}/mongodb/data/db:/data/db
+      - ${DOCKER_DIR}/mongodb/data/configdb:/data/configdb
     ports:
       - "27017:27017"
     deploy:
