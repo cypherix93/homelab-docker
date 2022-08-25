@@ -36,7 +36,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/petio/data/db:/data/db    
     ports:
-      - "67017:27017"
+      - "7717:27017"
     deploy:
       mode: global
       placement:
