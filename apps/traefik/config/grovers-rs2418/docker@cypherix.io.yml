@@ -1,0 +1,24 @@
+{{ $domain := "cypherix.io" }}
+{{ $internal_ip := "192.168.1.251" }}
+{{
+  $hostmap := dict
+    "petio"       "7777"
+    "requests"    "7777"
+}}
+
+http:
+  routers:
+  {{range $host, $port := $hostmap}}
+    {{$host}}:
+      rule: "Host(`{{$host}}.{{$domain}}`)"
+      service: "{{$host}}"
+      entryPoints:
+        - "web-https"
+  {{end}}
+  services:
+  {{range $host, $port := $hostmap}}
+    {{$host}}:
+      loadBalancer:
+        servers:
+          - url: "http://{{$internal_ip}}:{{$port}}"
+  {{end}}

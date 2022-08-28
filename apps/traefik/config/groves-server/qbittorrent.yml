@@ -1,0 +1,10 @@
+http:
+  routers:
+    qbittorrent:
+      rule: "Host(`qbittorrent.cypherix.dev`)"
+      service: "qbittorrent"
+  services:
+    qbittorrent:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.244:13377"

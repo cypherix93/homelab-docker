@@ -1,0 +1,30 @@
+{{ $domain := "cypherix.dev" }}
+{{ $internal_ip := "192.168.1.251" }}
+{{
+  $hostmap := dict
+    "sonarr"       "8989"
+    "radarr"       "7878"
+    "bazarr"       "6767"
+    "prowlarr"     "9696"
+    "tautulli"     "8181"
+
+    "portainer"     "9000"
+    "dashboard"     "4313"
+}}
+
+http:
+  routers:
+  {{range $host, $port := $hostmap}}
+    {{$host}}:
+      rule: "Host(`{{$host}}.{{$domain}}`)"
+      service: "{{$host}}"
+      entryPoints:
+        - "web-https"
+  {{end}}
+  services:
+  {{range $host, $port := $hostmap}}
+    {{$host}}:
+      loadBalancer:
+        servers:
+          - url: "http://{{$internal_ip}}:{{$port}}"
+  {{end}}
