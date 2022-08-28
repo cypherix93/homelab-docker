@@ -4,6 +4,7 @@ services:
   db:
     image: mongo:4.4.6
     volumes:
+      - ${DOCKER_DIR}/mongodb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ${DOCKER_DIR}/mongodb/data/db:/data/db
       - ${DOCKER_DIR}/mongodb/data/configdb:/data/configdb
       - ${DOCKER_DIR}/mongodb/etc:/etc
@@ -22,3 +23,5 @@ services:
 secrets:
   server-certificate:
     file: ${DOCKER_DIR}/_certs/origin/cypherix.io.pem
+  root-ca:
+    file: ${DOCKER_DIR}/_certs/origin_ca_rsa_root.pem
