@@ -6,11 +6,19 @@ services:
     volumes:
       - ${DOCKER_DIR}/mongodb/data/db:/data/db
       - ${DOCKER_DIR}/mongodb/data/configdb:/data/configdb
+      - ${DOCKER_DIR}/mongodb/etc:/etc
     ports:
-      - "27017:27017"
+      - "27017-27019:27017-27019"
+    command: [
+      "--config /etc/mongod.conf"
+    ]
     deploy:
       mode: global
       placement:
         constraints:
           - node.role == manager
           - node.platform.os == linux
+
+secrets:
+  server-certificate:
+    file: ${DOCKER_DIR}/_certs/origin/cypherix.io.pem
