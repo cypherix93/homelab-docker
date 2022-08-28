@@ -13,6 +13,9 @@ services:
     command: [
       "--config /etc/mongod.conf"
     ]
+    secrets:
+      - server-certificate
+      - root-ca
     deploy:
       mode: global
       placement:
