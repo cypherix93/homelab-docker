@@ -12,7 +12,7 @@ services:
     ports:
       - "27017-27019:27017-27019"
     command: [
-      "--config /etc/mongod.conf"
+      "--config", "/etc/mongod.conf"
     ]
     deploy:
       mode: global
