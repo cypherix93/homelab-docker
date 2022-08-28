@@ -8,23 +8,15 @@ services:
       - ${DOCKER_DIR}/mongodb/data/db:/data/db
       - ${DOCKER_DIR}/mongodb/data/configdb:/data/configdb
       - ${DOCKER_DIR}/mongodb/etc:/etc
+      - ${DOCKER_DIR}/_certs:/certs
     ports:
       - "27017-27019:27017-27019"
     command: [
       "--config /etc/mongod.conf"
     ]
-    secrets:
-      - server-certificate
-      - root-ca
     deploy:
       mode: global
       placement:
         constraints:
           - node.role == manager
           - node.platform.os == linux
-
-secrets:
-  server-certificate:
-    file: ${DOCKER_DIR}/_certs/origin/cypherix.io.pem
-  root-ca:
-    file: ${DOCKER_DIR}/_certs/origin_ca_rsa_root.pem
