@@ -7,7 +7,7 @@ services:
       - ${DOCKER_DIR}/mongodb/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
       - ${DOCKER_DIR}/mongodb/data/db:/data/db
       - ${DOCKER_DIR}/mongodb/data/configdb:/data/configdb
-      - ${DOCKER_DIR}/mongodb/etc/mongod.conf:/etc/mongod.conf
+      # - ${DOCKER_DIR}/mongodb/etc/mongod.conf:/etc/mongod.conf
       - ${DOCKER_DIR}/_certs:/certs
     ports:
       - "27017-27019:27017-27019"
