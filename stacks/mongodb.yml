@@ -11,9 +11,9 @@ services:
       - ${DOCKER_DIR}/_certs:/certs
     ports:
       - "27017-27019:27017-27019"
-    command: [
-      "--config", "/etc/mongod.conf"
-    ]
+    # command: [
+    #   "--config", "/etc/mongod.conf"
+    # ]
     deploy:
       mode: global
       placement:
