@@ -7,9 +7,11 @@
     "bazarr"       "6767"
     "prowlarr"     "9696"
     "tautulli"     "8181"
+    
+    "pgadmin"     "5480"
 
-    "portainer"     "9000"
-    "dashboard"     "4313"
+    "portainer"    "9000"
+    "dashboard"    "4313"
 }}
 
 http:
