@@ -1,5 +1,9 @@
 #!/bin/bash
 
-# portainer stack
-docker stack rm portainer
-docker stack deploy --prune -c "$(dirname "$0")/../stacks/portainer.yml" portainer_side
+# recreate all stacks in "compose" directory
+ls -d $(realpath -- "$(dirname -- "$0")/../compose/*/") | \
+    while read -r dir; do \
+        echo "✨ Recreating Stack: $(basename -- $dir)"
+        echo "   📁 Directory: $dir"
+        docker compose --project-directory $dir up -d;
+    done
