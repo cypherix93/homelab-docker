@@ -1,0 +1,39 @@
+version: "3.5"
+
+services:
+
+  # Database
+  #-------------------------------------------------------------
+  db:
+    image: postgres
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - POSTGRES_PASSWORD_FILE=/etc/postgresql/password
+    volumes:
+      - ${DOCKER_DIR}/postgres/data:/var/lib/postgresql/data
+      - ${DOCKER_DIR}/postgres/password:/etc/postgresql/password
+      - ${DOCKER_DIR}/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ${DOCKER_DIR}/_certs/origin:/certs
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+
+  # PG Admin
+  #-------------------------------------------------------------
+  admin:
+    image: dpage/pgadmin4
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - PGADMIN_DEFAULT_EMAIL=groves@cypherix.dev
+      - PGADMIN_DEFAULT_PASSWORD_FILE=/etc/pgadmin/password
+    volumes:
+      - ${DOCKER_DIR}/pgadmin4/var/lib/pgadmin:/var/lib/pgadmin
+      - ${DOCKER_DIR}/pgadmin4/password:/etc/pgadmin/password
+    ports:
+      - "5480:80"
+      - "54443:443"
+    restart: unless-stopped
