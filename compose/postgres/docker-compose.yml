@@ -5,29 +5,29 @@ services:
   # Database
   #-------------------------------------------------------------
   db:
-    image: postgres
+    image: postgres:alpine
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
+      - POSTGRES_USER=groves
       - POSTGRES_PASSWORD_FILE=/etc/postgresql/password
     volumes:
       - ${DOCKER_DIR}/postgres/data:/var/lib/postgresql/data
       - ${DOCKER_DIR}/postgres/password:/etc/postgresql/password
-      - ${DOCKER_DIR}/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
-      - ${DOCKER_DIR}/_certs/origin:/certs
+      # - ${DOCKER_DIR}/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ${DOCKER_DIR}/postgres/certs:/certs
     ports:
       - "54322:5432"
+    command: [
+      "-c", "ssl=on",
+      "-c", "ssl_cert_file=/certs/cypherix.io.pem",
+      "-c", "ssl_key_file=/certs/cypherix.io.key"
+    ]
     restart: unless-stopped
 
   # PG Admin
   #-------------------------------------------------------------
   admin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     environment:
-      - PUID=${PUID}
-      - PGID=${PGID}
-      - TZ=${TZ}
       - PGADMIN_DEFAULT_EMAIL=groves@cypherix.dev
       - PGADMIN_DEFAULT_PASSWORD_FILE=/etc/pgadmin/password
     volumes:
