@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika+Negative:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=B612+Mono:wght@400;700&display=swap');
+
+:root {
+    --app-item-width: 18rem;
+    --app-item-height: 5.75rem;
+
+    --app-icon-size: 3.5rem;
+}
+
+#app main {
+    padding: 8rem 1rem 2rem;
+}
+
+.item-container .item {
+    width: var(--app-item-width);
+    height: var(--app-item-height);
+
+    padding: 1rem 4rem 1rem 1rem;
+    margin: 1rem;
+
+    background-image: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.15));
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.5), 0 8px 12px 0px rgba(0, 0, 20, 0.15), 0 12px 24px -4px rgba(0, 0, 20, 0.15);
+
+    border: none !important;
+
+    opacity: 0.96;
+}
+
+.item-container .item .app-icon-container {
+    width: var(--app-icon-size);
+    height: var(--app-icon-size);
+    flex: 0 0 var(--app-icon-size);
+
+    margin-right: 1rem;
+}
+
+.item-container .item .app-icon-container .app-icon {
+    max-width: var(--app-icon-size);
+    max-height: var(--app-icon-size);
+}
+
+.item-container .item .details >.title {
+    font-family: 'Signika Negative', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+
+    margin-top: 0px;
+}
+
+.item-container .item .link svg,
+.item-container .item::after {
+    display: none;
+}
+
+.livestats-container .livestats {
+    margin-top: 0px;
+}
+
+.livestats-container .livestats span {
+    opacity: 0.6;
+}
+
+.livestats-container .livestats .title {
+    font-family: 'Signika Negative', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+
+    margin-top: 8px;
+}
+
+.livestats-container .livestats .title+* {
+    /*font-family: 'Inconsolata', monospace;*/
+    font-family: 'B612 Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+
+    margin-top: 4px;
+}
