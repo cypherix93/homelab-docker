@@ -2,6 +2,29 @@ version: '3.5'
 
 services:
 
+# Downloaders
+#-------------------------------------------------------------
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    networks:
+      - vpn
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+      - WEBUI_PORT=1337
+    volumes:
+      - ${DOCKER_DIR}/qbittorrent/config:/config
+      - ${DOCKER_DIR}/qbittorrent/webui:/etc/webui
+      - ${DOWNLOADS_SEEDING_DIR}:/downloads/seeding
+      - ${DOWNLOADS_MANUAL_DIR}:/downloads/manual
+      - ${DOWNLOADS_GAMES_DIR}:/downloads/games
+    ports:
+      - "1337:1337"
+      - "13377:13377"
+      - "13377:13377/udp"
+    restart: unless-stopped
+
 # Indexers
 #-------------------------------------------------------------
   prowlarr:
@@ -15,7 +38,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/prowlarr/config:/config
     ports:
-      - '9696:9696'
+      - "9696:9696"
     restart: unless-stopped
 
 
