@@ -3,20 +3,19 @@ version: "3.5"
 services:
   pihole:
     image: pihole/pihole:latest
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "80:80/tcp"
-      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
+    # cap_add:
+    #   - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     environment:
       - TZ=${TZ}
       - WEBPASSWORD=${WEBPASSWORD}
     volumes:
       - ${DOCKER_DIR}/pihole/etc/pihole:/etc/pihole
       - ${DOCKER_DIR}/pihole/etc/dnsmasq.d:/etc/dnsmasq.d
-    # cap_add:
-    #   - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
-    restart: unless-stopped
+    ports:
+      - "53:53/tcp"
+      - "53:53/udp"
+      - "80:80/tcp"
+      # - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
 
 # Networks
 #-------------------------------------------------------------
