@@ -5,6 +5,8 @@ services:
     image: pihole/pihole:latest
     # cap_add:
     #   - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
+    networks:
+      - pihole-macvlan
     environment:
       - TZ=${TZ}
       - WEBPASSWORD=${WEBPASSWORD}
