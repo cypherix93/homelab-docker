@@ -1,6 +1,12 @@
-version: '3'
+version: "3.5"
 
 services:
+  homepage:
+    image: ghcr.io/benphelps/homepage:latest
+    ports:
+      - 4033:3000
+    volumes:
+      - ${DOCKER_DIR}/homepage/config:/app/config
 
   # Heimdall
   heimdall:
@@ -13,7 +19,7 @@ services:
       - 4314:443
       - 4313:80
     volumes:
-      - /volume1/docker/heimdall/config:/config
+      - ${DOCKER_DIR}/heimdall/config:/config
 
   # Dozzle
   dozzle:
