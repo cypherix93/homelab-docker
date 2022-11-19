@@ -7,6 +7,7 @@ services:
       - 4033:3000
     volumes:
       - ${DOCKER_DIR}/homepage/config:/app/config
+      - ${DOCKER_DIR}/homepage/public:/app/public
 
   # Heimdall
   heimdall:
