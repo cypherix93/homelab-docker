@@ -11,6 +11,7 @@
     "pgadmin"      "5480"
 
     "portainer"    "9000"
+    "glances"      "61208"
     "dashboard"    "4313"
     "homepage"     "4033"
 }}
