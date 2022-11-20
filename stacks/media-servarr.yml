@@ -17,6 +17,11 @@ services:
       - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 8989:8989
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 1G
 #-------------------------------------------------------------
   radarr:
     image: lscr.io/linuxserver/radarr
@@ -31,6 +36,11 @@ services:
       - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 7878:7878
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 1G
 #-------------------------------------------------------------
   bazarr:
     image: lscr.io/linuxserver/bazarr
@@ -45,6 +55,11 @@ services:
       - ${MEDIA_ROOT_DIR_2}:/media/Y
     ports:
       - 6767:6767
+    deploy:
+      resources:
+        limits:
+          cpus: 1
+          memory: 1G
 #-------------------------------------------------------------
   unpackerr:
     image: golift/unpackerr:latest
