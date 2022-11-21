@@ -20,7 +20,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
           memory: 1G
 #-------------------------------------------------------------
   radarr:
@@ -39,7 +38,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '2'
           memory: 1G
 #-------------------------------------------------------------
   bazarr:
@@ -58,7 +56,6 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '1'
           memory: 1G
 #-------------------------------------------------------------
   unpackerr:
