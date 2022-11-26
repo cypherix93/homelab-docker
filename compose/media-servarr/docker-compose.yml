@@ -1,0 +1,58 @@
+version: '3.5'
+
+services:
+
+# Media Management
+#============================================================
+  sonarr:
+    image: lscr.io/linuxserver/sonarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/sonarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
+    ports:
+      - 8989:8989
+#-------------------------------------------------------------
+  radarr:
+    image: lscr.io/linuxserver/radarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/radarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
+    ports:
+      - 7878:7878
+#-------------------------------------------------------------
+  bazarr:
+    image: lscr.io/linuxserver/bazarr
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/bazarr/config:/config
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+      - ${MEDIA_ROOT_DIR_1}:/media/X
+      - ${MEDIA_ROOT_DIR_2}:/media/Y
+    ports:
+      - 6767:6767
+#-------------------------------------------------------------
+  unpackerr:
+    image: golift/unpackerr:latest
+    environment:
+      - PUID=${PUID}
+      - PGID=${PGID}
+      - TZ=${TZ}
+    volumes:
+      - ${DOCKER_DIR}/unpackerr:/etc/unpackerr
+      - ${DOWNLOADS_ROOT_DIR}:/downloads
+#-------------------------------------------------------------
