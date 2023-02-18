@@ -6,6 +6,7 @@
     "radarr"       "7878"
     "bazarr"       "6767"
     "prowlarr"     "9696"
+    "qbittorrent"  "1337"
     "tautulli"     "8181"
     
     "pgadmin"      "5480"

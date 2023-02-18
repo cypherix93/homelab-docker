@@ -4,7 +4,8 @@
   $hostmap := dict
     "petio"       "7777"
     "requests"    "7777"
-    "postgres"    "5432"
+    "postgres"    "54322"
+    "webdav"      "5080"
 }}
 
 http:
