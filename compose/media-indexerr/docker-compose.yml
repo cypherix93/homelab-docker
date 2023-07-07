@@ -28,7 +28,7 @@ services:
 # Indexers
 #-------------------------------------------------------------
   prowlarr:
-    image: lscr.io/linuxserver/prowlarr:develop
+    image: lscr.io/linuxserver/prowlarr:latest
     networks:
       - vpn
     environment:
