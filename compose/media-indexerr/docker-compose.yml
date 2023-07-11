@@ -16,9 +16,7 @@ services:
     volumes:
       - ${DOCKER_DIR}/qbittorrent/config:/config
       - ${DOCKER_DIR}/qbittorrent/webui:/etc/webui
-      - ${DOWNLOADS_SEEDING_DIR}:/downloads/seeding
-      - ${DOWNLOADS_MANUAL_DIR}:/downloads/manual
-      - ${DOWNLOADS_GAMES_DIR}:/downloads/games
+      - ${DOWNLOADS_DIR}:/downloads
     ports:
       - "1337:1337"
       - "13377:13377"

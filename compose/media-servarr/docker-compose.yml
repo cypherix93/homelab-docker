@@ -5,7 +5,7 @@ services:
 # Media Management
 #============================================================
   sonarr:
-    image: lscr.io/linuxserver/sonarr
+    image: lscr.io/linuxserver/sonarr:latest
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -19,7 +19,7 @@ services:
       - 8989:8989
 #-------------------------------------------------------------
   radarr:
-    image: lscr.io/linuxserver/radarr
+    image: lscr.io/linuxserver/radarr:latest
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
@@ -33,7 +33,7 @@ services:
       - 7878:7878
 #-------------------------------------------------------------
   bazarr:
-    image: lscr.io/linuxserver/bazarr
+    image: lscr.io/linuxserver/bazarr:latest
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
