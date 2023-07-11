@@ -12,20 +12,25 @@ do
     esac
 done
 
-compose_dirs=$(realpath -- "$(dirname -- "$0")/../compose/$directory/");
+root_dir=$(realpath -- $(dirname -- "$0"));
+compose_dirs=$(realpath -- "$root_dir/../compose/$directory/");
 
-#echo "$directory";
-#echo "$force";
-#echo "$compose_dirs";
+# echo "$root_dir";
+# echo "$directory";
+# echo "$force";
+# echo "$compose_dirs";
 #
-#ls -ld $compose_dirs;
+# ls -ld $compose_dirs;
 
 #exit 0;
 
 # recreate all stacks in "compose" directory
 ls -d $compose_dirs | \
     while read -r dir; do \
-        echo "✨ Recreating Stack: $(basename -- $dir)"
-        echo "   📁 Directory: $dir"
-        docker compose --project-directory $dir up -d --pull 'always' $force;
+        echo "✨ Recreating Stack: $(basename -- $dir)";
+        echo "   📁 Directory: $dir";
+        cd $dir \
+            && docker-compose pull --include-deps \
+            && docker compose up -d $force;
+        cd $root_dir;
     done
